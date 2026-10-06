@@ -1,27 +1,19 @@
-name: "pre-release"
-
-on:
-  push:
-    branches:
-      - "main"
-
+name: Main
+on: push
+permissions:
+  contents: write
 jobs:
-  pre-release:
-    name: "Pre Release"
-    runs-on: "ubuntu-latest"
-
+  build:
+    runs-on: ubuntu-latest
     steps:
-      # ...
-      - name: "Build & test"
-        run: |
-          echo "done!"
-
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Build
+        run: echo ${{ github.sha }} > Release.txt
+      - name: Release
+        uses: softprops/action-gh-release@v3
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          title: "Development Build"
           files: |
             test.a
             kk.b
+          make_latest: "true"
