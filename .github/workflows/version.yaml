@@ -34,6 +34,11 @@ jobs:
           create_git_tag_only: true
           tag_name: ${{steps.version.outputs.version }}
           tagging_message: "Release ${{ steps.version.outputs.version }}"
+      - uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          create_git_tag_only: true
+          tag_name: latest
+          tagging_message: "Release ${{ steps.version.outputs.version }}"
       - name: Release
         uses: softprops/action-gh-release@v3
         with:
