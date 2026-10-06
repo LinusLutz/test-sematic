@@ -17,6 +17,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          filter: blob:none # exclude file contents for faster checkout
 
       - name: Calculate version
         id: version
@@ -33,3 +34,10 @@ jobs:
           create_git_tag_only: true
           tag_name: ${{steps.version.outputs.version }}
           tagging_message: "Release ${{ steps.version.outputs.version }}"
+      - name: Release
+        uses: softprops/action-gh-release@v3
+        with:
+          files: |
+            test.a
+            kk.b
+          make_latest: "true"
