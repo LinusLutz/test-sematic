@@ -36,6 +36,7 @@ jobs:
           tagging_message: "Release ${{ steps.version.outputs.version }}"
       - name: Release
         uses: softprops/action-gh-release@v3
+        tag_name: "v${{ steps.version.outputs.version }}"
         with:
           files: |
             test.a
